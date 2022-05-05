@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% load crispy_forms_tags %}
 
     <div class="container">
       <div class="row">
@@ -19,7 +20,7 @@
                   <div class="d-flex align-items-center flex-wrap">       
                     <div class="date"><i class="icon-clock"></i>{{ post.created_on }}</div>
                     <div class="views"><i class="icon-eye"></i> 500</div>
-                    <div class="date"><i class="icon-comment"></i>{{ post.number_of_likes }}</div>
+                    <div class="date"><i class="icon-comment"></i>{{ total_comments }}</div>
                     <div class="comments meta-last"><i class="fa fa-heart"></i>{{ post.number_of_likes }}</div>
                   </div>
                 </div>
@@ -47,9 +48,9 @@
                       <h6>I Bought a Wedding Dress.</h6>
                     </div> -->
                     <!-- <div class="icon next"><i class="fa fa-angle-right">   </i></div></a></div>
-                <div class="post-comments">
-                  <header> -->
-                    <h3 class="h6">Post Comments<span class="no-of-comments">(3)</span></h3>
+                <div class="post-comments"> -->
+                  <header> 
+                    <h3 class="h6">Post Comments<span class="no-of-comments">{{ total_comments }}</span></h3>
                   </header>
                   {% for comment in comments %}
                   <div class="comment">
@@ -66,11 +67,19 @@
                   </div>
                 <div class="add-comment">
                   <header>
+                    {% if commented %}
+                    <div class="alert alert-success" role="alert">
+                        Your comment is awaiting approval
+                    </div>
+                    {% else %}
+                    {% if user.is_authenticated %}
                     <h3 class="h6">Leave a reply</h3>
                   </header>
                   <form action="#" class="commenting-form">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
                     <div class="row">
-                      <div class="form-group col-md-6">
+                      <!-- <div class="form-group col-md-6">
                         <input type="text" name="username" id="username" placeholder="Name" class="form-control">
                       </div>
                       <div class="form-group col-md-6">
@@ -78,12 +87,14 @@
                       </div>
                       <div class="form-group col-md-12">
                         <textarea name="usercomment" id="usercomment" placeholder="Type your comment" class="form-control"></textarea>
-                      </div>
+                      </div> -->
                       <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-secondary">Submit Comment</button>
                       </div>
                     </div>
                   </form>
+                  {% endif %}
+                 {% endif %}
                 </div>
               </div>
             </div>
@@ -131,7 +142,7 @@
                   <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
                     <div class="d-flex align-items-center">
                       <div class="views"><i class="icon-eye"></i> 500</div>
-                      <div class="comments"><i class="icon-comment"></i>12</div>
+                      <div class="comments"><i class="icon-comment"></i>{{ total_comments }}</div>
                     </div>
                   </div>
                 </div></a></div>
