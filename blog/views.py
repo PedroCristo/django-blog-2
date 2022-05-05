@@ -79,4 +79,3 @@ class PostLike(View):
 
 class Contact_Page(generic.ListView):
     template_name = "contact.html"
-     
