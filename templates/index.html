@@ -31,15 +31,16 @@
             <div class="text-inner d-flex align-items-center">
               <div class="content">
                 <header class="post-header">
-                  <div class="category"><a href="#">Business</a><a href="#">Technology</a></div><a href="post.html">
+                  <div class="category"><a href="#">Business</a><a href="#">Technology</a></div><a href="{% url 'post_detail' post.slug %}">
                     <h2 class="h4">{{ post.title }}</h2></a>
                 </header>
                 <p>{{ post.excerpt }}</p>
                 <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                     <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
-                    <div class="title"><span>{{ post.author }</span></div></a>
+                    <div class="title"><span>{{ post.author }}</span></div></a>
                   <div class="date"><i class="icon-clock"></i>{{ post.created_on }}</div>
-                  <div class="comments"><i class="icon-comment"></i>12</div>
+                  <div class="date"><i class="icon-comment"></i>{{ post.number_of_likes }}</div>
+                  <div class="comments meta-last"><i class="fa fa-heart"></i>{{ post.number_of_likes }}</div>
                 </footer>
               </div>
             </div>
@@ -48,6 +49,19 @@
           {% endfor %}
         </div>
       </div>
+      {% if is_paginated %}
+      <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+              <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a></li>
+              {% endif %}
+              {% if page_obj.has_next %}
+              <li><a href="?page={{ page_obj.next_page_number }}" class="page-link">NEXT &raquo;</a></li>
+  
+              {% endif %}a
+          </ul>
+      </nav>
+      {% endif %}
     </section>
     <!-- END OF POST -->
     <!-- Divider Section-->
